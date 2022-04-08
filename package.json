@@ -1,5 +1,4 @@
 {
-  "homepage": "http://kimjisoo7.github.io/clone-coding-netflix",
   "name": "react-typescript",
   "version": "0.1.0",
   "private": true,
@@ -52,6 +51,7 @@
       "last 1 safari version"
     ]
   },
+  "homepage": "https://kimjisoo7.github.io/clone-coding-netflix",
   "devDependencies": {
     "@types/react-helmet": "^6.1.5",
     "@types/react-router-dom": "^5.3.3",
