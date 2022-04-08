@@ -51,7 +51,7 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "https://kimjisoo7.github.io/clone-coding-netflix",
+  "homepage": "https://kimjisoo7.github.io/netflix-clone",
   "devDependencies": {
     "@types/react-helmet": "^6.1.5",
     "@types/react-router-dom": "^5.3.3",
