@@ -1,15 +1,14 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Header from "./Components/Header";
-import Header2 from "./Components/Header2";
 import Home from "./Routes/Home";
 import Search from "./Routes/Search";
 import Tv from "./Routes/Tv";
+import { ReactQueryDevtools } from "react-query/devtools";
 
 function App() {
   return (
     <Router>
       <Header></Header>
-      <Header2></Header2>
       <Switch>
         <Route path="/tv">
           <Tv />
@@ -21,6 +20,7 @@ function App() {
           <Home />
         </Route>
       </Switch>
+      <ReactQueryDevtools initialIsOpen />
     </Router>
   );
 }

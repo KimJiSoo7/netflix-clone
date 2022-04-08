@@ -4,6 +4,8 @@ import { useQuery } from "react-query";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import styled from "styled-components";
 import { getMovies, IGetMoviesResult } from "../api";
+import Overview from "../Components/Overview";
+import Player from "../Components/Player";
 import { makeImagePath } from "../utils";
 
 const Wrapper = styled.div`
@@ -30,19 +32,29 @@ const Banner = styled.div<{ bgPhoto: string }>`
   background-size: cover;
 `;
 
+const VideoBanner = styled.div`
+  width: 100%;
+  height: 100vh;
+  /* background-color: red; */
+  color: ${(props) => props.theme.white.lighter};
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center; */
+`;
+
 const Title = styled.h2`
   font-size: 68px;
   margin-bottom: 20px;
 `;
 
-const Overview = styled.p`
-  font-size: 30px;
-  width: 50%;
-`;
+// const Overview = styled.p`
+//   font-size: 30px;
+//   width: 50%;
+// `;
 
 const Slider = styled.div`
   position: relative;
-  /* top: -100px; */
+  top: -100px;
 `;
 
 const Row = styled(motion.div)`
@@ -170,8 +182,15 @@ function Home() {
     ["movies", "nowPlaying"],
     getMovies
   );
+  const [movieIndex, setMovieIndex] = useState(0);
   const [index, setIndex] = useState(0);
   const [leaving, setLeaving] = useState(false);
+  const setNextMovie = () => {
+    movieIndex !== data?.results.length
+      ? setMovieIndex((prev) => prev + 1)
+      : setMovieIndex(0);
+    console.log("movieIndex ", movieIndex);
+  };
   const increaseIndex = () => {
     if (data) {
       if (leaving) return;
@@ -209,13 +228,46 @@ function Home() {
         <Loader>Loading...</Loader>
       ) : (
         <>
-          <Banner
+          {/* <Banner
             onClick={increaseIndex}
             bgPhoto={makeImagePath(data?.results[0].backdrop_path || "")}
           >
             <Title>{data?.results[0].title}</Title>
             <Overview>{data?.results[0].overview}</Overview>
-          </Banner>
+          </Banner> */}
+          {/* <div
+            style={{
+              // position: "relative",
+              // top: "100px",
+              backgroundSize: "cover",
+              backgroundImage: `url(${`https://image.tmdb.org/t/p/original/wdrCwmRnLFJhEoH8GSfymY85KHT.png`})`,
+              backgroundColor: "red",
+              color: "white",
+              height: "200px",
+              width: "400px",
+            }}
+          >
+            Hi
+          </div> */}
+          <VideoBanner onClick={increaseIndex}>
+            {data?.results && (
+              <>
+                <Player
+                  key={data?.results[movieIndex].id}
+                  movieId={data.results[movieIndex].id}
+                  index={movieIndex}
+                  length={data.results.length}
+                  setNextMovie={() => setNextMovie}
+                />
+                <Overview
+                  title={data.results[movieIndex].title}
+                  summary={data.results[movieIndex].overview}
+                  movieId={data.results[movieIndex].id}
+                />
+              </>
+            )}
+          </VideoBanner>
+
           <Slider>
             <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
               <Row
@@ -248,6 +300,7 @@ function Home() {
               </Row>
             </AnimatePresence>
           </Slider>
+
           <AnimatePresence>
             {bigMovieMatch && (
               <>

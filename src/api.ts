@@ -21,7 +21,19 @@ export interface IGetMoviesResult {
 }
 
 export function getMovies() {
+  return fetch(`${BASE_PATH}/movie/now_playing?api_key=${API_KEY}`).then(
+    (response) => response.json()
+  );
+}
+
+export function getVideos(movieId: number) {
   return fetch(
-    `${BASE_PATH}/movie/now_playing?api_key=${API_KEY}&language=kr`
+    `${BASE_PATH}/movie/${movieId}/videos?api_key=${API_KEY}&language=en-US`
+  ).then((response) => response.json());
+}
+
+export function getLogo(movieId: number) {
+  return fetch(
+    `${BASE_PATH}/movie/${movieId}?api_key=${API_KEY}&language=en-US`
   ).then((response) => response.json());
 }
